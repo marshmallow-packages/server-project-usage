@@ -4,6 +4,7 @@ namespace Marshmallow\Server\ProjectUsage;
 
 use Illuminate\Support\ServiceProvider;
 use Marshmallow\Server\ProjectUsage\Console\Commands\ShowProjectUsageCommand;
+use Marshmallow\Server\ProjectUsage\Console\Commands\PublishPackageUsageCommand;
 use Marshmallow\Server\ProjectUsage\Console\Commands\PublishProjectUsageCommand;
 
 class ProjectUsageServiceProvider extends ServiceProvider
@@ -33,6 +34,7 @@ class ProjectUsageServiceProvider extends ServiceProvider
             $this->commands([
                 ShowProjectUsageCommand::class,
                 PublishProjectUsageCommand::class,
+                PublishPackageUsageCommand::class,
             ]);
         }
     }

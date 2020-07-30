@@ -29,6 +29,22 @@ class DataGenerator
 					;
 	}
 
+	public function publishPackages()
+	{
+		/**
+		 * Only keep packages in the data object.
+		 * @var [type]
+		 */
+		foreach ($this->data['data'] as $key => $data) {
+			if ($key != 'packages') {
+				unset($this->data['data'][$key]);
+			}
+		}
+
+		return $this->setPackages()
+			 	    ->publish();
+	}
+
 	public function publish()
 	{
 		if (!class_exists(Http::class)) {
@@ -45,6 +61,8 @@ class DataGenerator
 				'Content-Type' => 'application/json',
 			])->post(config('project-usage.api_endpoint'), $this->data);
 		}
+
+		return $this;
 	}
 
 	protected function setDatabaseInformation()

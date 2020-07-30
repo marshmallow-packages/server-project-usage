@@ -16,7 +16,20 @@ PROJECT_USAGE_CUSTOMER_ID=XXXXXX
 PROJECT_USAGE_PROJECT_ID=XXXXXX
 ```
 
+### Setup automatic updating
+Add the following command to your `composer.json` so on every composer update we will update the information in your panel.
 
+```php
+"scripts": {
+    "post-autoload-dump": [
+        // ...
+        "@php artisan marshmallow:publish-package-usage"
+    ],
+    // ...
+}
+```
+
+### Schedule your updates
 Add the command to your schedule in every project and handle the request on the endpoint in your config file to store the data that will be send.
 ```php
 protected function schedule(Schedule $schedule)
@@ -34,4 +47,9 @@ php artisan marshmallow:show-project-usage
 ```bash
 # This will do a post request to the endpoint in the config
 php artisan marshmallow:publish-project-usage
+```
+
+```bash
+# This will only post the package information to your endpoint
+php artisan marshmallow:publish-package-usage
 ```
