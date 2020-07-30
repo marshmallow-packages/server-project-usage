@@ -2,12 +2,13 @@
 
 namespace Marshmallow\Server\ProjectUsage;
 
+use Exception;
+use RuntimeException;
+use FilesystemIterator;
+use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
-use RecursiveIteratorIterator;
-use FilesystemIterator;
-use Exception;
 
 class DataGenerator
 {
@@ -92,7 +93,11 @@ class DataGenerator
 	    $path = realpath($path);
 	    if ($path!==false && $path!='' && file_exists($path)) {
 	        foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS)) as $object) {
-	            $bytestotal += $object->getSize();
+	            try {
+					$bytestotal += $object->getSize();
+				} catch (RuntimeException $e) {
+					//
+				}
 	        }
 	    }
 	    return $bytestotal;
