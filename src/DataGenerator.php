@@ -31,10 +31,20 @@ class DataGenerator
 
 	public function publish()
 	{
-		Http::withHeaders([
-			'Accept' => 'application/json',
-			'Content-Type' => 'application/json',
-		])->post(config('project-usage.api_endpoint'), $this->data);
+		if (!class_exists(Http::class)) {
+			/**
+			 * Fallback for Laravel 6.x
+			 */
+			$client = new \GuzzleHttp\Client;
+			$client->request('POST', config('project-usage.api_endpoint'), [
+			    'json' => $this->data,
+			]);
+		} else {
+			Http::withHeaders([
+				'Accept' => 'application/json',
+				'Content-Type' => 'application/json',
+			])->post(config('project-usage.api_endpoint'), $this->data);
+		}
 	}
 
 	protected function setDatabaseInformation()
