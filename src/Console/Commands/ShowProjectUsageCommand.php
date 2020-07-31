@@ -38,6 +38,10 @@ class ShowProjectUsageCommand extends Command
      */
     public function handle()
     {
+    	if (!DataGenerator::shouldRun()) {
+    		return 1;
+    	}
+
     	$output = (new DataGenerator)
     					->generate()
     					->output();

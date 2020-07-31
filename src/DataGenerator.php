@@ -143,6 +143,20 @@ class DataGenerator
 		return $this;
 	}
 
+	public static function shouldRun()
+	{
+		if (!config('project-usage.customer_id')) {
+			return false;
+		}
+		if (!config('project-usage.project_id')) {
+			return false;
+		}
+		if (!config('project-usage.api_endpoint')) {
+			return false;
+		}
+		return true;
+	}
+
 	protected function prepareDataStructureWithDefault()
 	{
 		$this->data = [

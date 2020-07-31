@@ -38,6 +38,9 @@ class PublishPackageUsageCommand extends Command
      */
     public function handle()
     {
+    	if (!DataGenerator::shouldRun()) {
+    		return 1;
+    	}
     	(new DataGenerator)
 				->publishPackages();
     }

@@ -38,6 +38,10 @@ class PublishProjectUsageCommand extends Command
      */
     public function handle()
     {
+    	if (!DataGenerator::shouldRun()) {
+    		return 1;
+    	}
+
     	(new DataGenerator)
 				->generate()
 				->publish();
