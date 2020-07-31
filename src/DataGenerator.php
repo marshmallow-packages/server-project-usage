@@ -6,16 +6,20 @@ use Exception;
 use RuntimeException;
 use FilesystemIterator;
 use RecursiveIteratorIterator;
+use Illuminate\Console\Command;
 use RecursiveDirectoryIterator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 class DataGenerator
 {
-	protected $data;
+	protected $command;
 
-	public function __construct()
+    protected $data;
+
+	public function __construct(Command $command)
 	{
+        $this->command = $command;
 		$this->prepareDataStructureWithDefault();
 	}
 
@@ -47,6 +51,8 @@ class DataGenerator
 
 	public function publish()
 	{
+        $this->command->info('Start to publish the data');
+
 		if (!class_exists(Http::class)) {
 			/**
 			 * Fallback for Laravel 6.x
@@ -62,11 +68,15 @@ class DataGenerator
 			])->post(config('project-usage.api_endpoint'), $this->data);
 		}
 
+        $this->command->info('Data successfully published');
+
 		return $this;
 	}
 
 	protected function setDatabaseInformation()
 	{
+        $this->command->info('Calculate database size');
+
 		$tables = DB::select("show table status");
 
 		$size = 0;
@@ -81,6 +91,8 @@ class DataGenerator
 
 	protected function setPackages()
 	{
+        $this->command->info('Set all packages and there version');
+
 		$composer_file = base_path() . '/composer.json';
 		if (!file_exists($composer_file)) {
 			throw new Exception('No composer.json file found');
@@ -117,6 +129,8 @@ class DataGenerator
 
 	protected function getDirectorySize($path)
 	{
+        $this->command->info('Get directory size of: ' . $path);
+
 	    $bytestotal = 0;
 	    $path = realpath($path);
 	    if ($path!==false && $path!='' && file_exists($path)) {

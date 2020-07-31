@@ -39,11 +39,11 @@ class PublishProjectUsageCommand extends Command
     public function handle()
     {
     	if (!DataGenerator::shouldRun()) {
-    		return 1;
-    	}
-
-    	(new DataGenerator)
-				->generate()
-				->publish();
+            $this->line("Marshmallow Publish Packages: <error>Not run because the .env file is not filled</error>");
+    	} else {
+            (new DataGenerator($this))
+					->generate()
+					->publish();
+        }
     }
 }

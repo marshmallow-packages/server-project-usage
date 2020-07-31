@@ -23,7 +23,7 @@ Add the following command to your `composer.json` so on every composer update we
 "scripts": {
     "post-autoload-dump": [
         // ...
-        "@php artisan marshmallow:publish-package-usage"
+        "@php artisan marshmallow:publish-package-usage --ansi"
     ],
     // ...
 }
@@ -52,4 +52,38 @@ php artisan marshmallow:publish-project-usage
 ```bash
 # This will only post the package information to your endpoint
 php artisan marshmallow:publish-package-usage
+```
+
+### The data
+Below you will find the data that will be sent to the API endpoint.
+```json
+{
+	"customer_id": "XXXXXX",
+	"project_id": "XXXXXX",
+	"data": {
+		"server": {
+			"php_version": "7.4.8"
+		},
+		"database": {
+			"size": 14155776,		// bytes
+			"table_count": 31
+		},
+		"storage": {
+			"root": 284579340,		// bytes
+			"storage": 53010322		// bytes
+		},
+		"packages": {
+			"composer": {
+				"marshmallow/package-novastyling": "v1.1.1",
+				"marshmallow/server-project-usage": "v1.0.4"
+				// ...
+			},
+			"dependencies": {
+				"doctrine/inflector": "2.0.3",
+				"laravel/ui": "v2.1.0"
+				// ...
+			}
+		}
+	}
+}
 ```
