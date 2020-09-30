@@ -28,8 +28,8 @@ class DataGenerator
 		return $this
 					->setDatabaseInformation()
 					->setPackages()
-					->setStorage('root', base_path())
-					->setStorage('storage', storage_path())
+					// ->setStorage('root', base_path())
+					// ->setStorage('storage', storage_path())
 					;
 	}
 
