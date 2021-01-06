@@ -16,7 +16,7 @@ class ProjectUsageServiceProvider extends ServiceProvider
      */
     public function register()
     {
-    	$this->mergeConfigFrom(__DIR__ . '/../config/project-usage.php', 'project-usage');
+        $this->mergeConfigFrom(__DIR__ . '/../config/project-usage.php', 'project-usage');
     }
 
     /**
@@ -26,7 +26,7 @@ class ProjectUsageServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-    	$this->publishes([
+        $this->publishes([
             __DIR__ . '/../config/project-usage.php' => config_path('project-usage.php'),
         ]);
 

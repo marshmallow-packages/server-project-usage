@@ -38,14 +38,14 @@ class ShowProjectUsageCommand extends Command
      */
     public function handle()
     {
-    	if (!DataGenerator::shouldRun()) {
+        if (! DataGenerator::shouldRun()) {
             $this->line("Marshmallow Publish Packages: <error>Not run because the .env file is not filled</error>");
-    	} else {
+        } else {
             $output = (new DataGenerator($this))
-	    					->generate()
-	    					->output();
+                            ->generate()
+                            ->output();
 
-    		dd(json_decode($output));
+            dd(json_decode($output));
         }
     }
 }
